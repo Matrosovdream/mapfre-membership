@@ -36,9 +36,12 @@ function manager_members_func() {
         $udata = get_userdata( $user_id );
         $registered = $udata->user_registered;  
 
+        // Search
+        if( isset( $_GET['search'] ) ) { $filter['search'] = $_GET['search']; }
+
         // Transactions
         $mmb = new Membership_members();
-        $transactions = $mmb->get_user_transactions( $user_id, $filter=array() );
+        $transactions = $mmb->get_user_transactions( $user_id, $filter );
 
         /*
         echo "<pre>";
@@ -61,19 +64,30 @@ function manager_members_func() {
             $filter['search'] = '*'.$_GET['search'].'*';
         }
 
+        // Statistics
+        $stats = $mmb->get_all_stats();
+
+        $members = $mmb->get_members_list( $filter, $page=$_GET['pg'] );
+        $pagination = $mmb->get_pagination();
+
+        // Filters
         $active_count = $mmb->get_active_subscriptions( $filter );
         $inactive_count = $mmb->get_inactive_subscriptions( $filter );
 
         //if( isset($_GET['page']) ) { $page=$_GET['page']; } else { $page=1; }
-        $members = $mmb->get_members_list( $filter, $page=$_GET['pg'] );
-        $pagination = $mmb->get_pagination();
-
+        
         foreach( $members as $key=>$item ) {
 
+            // Transactions sum
             $transactions = $mmb->get_user_transactions( $item['ID'] );
             $members[$key]['transactions_sum'] = array_sum( array_column( $transactions['results'], "amount" ) );
 
+            // Debt
+            $members[$key]['debt'] = $mmb->get_member_debt( $item['ID'] );
+
         }
+
+        
 
     }
 

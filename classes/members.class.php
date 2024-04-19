@@ -152,9 +152,11 @@ class Membership_members {
 
         }
 
+        /*
         echo "<pre>";
         print_r($data);
         echo "</pre>";
+        */
 
     }
 
@@ -163,13 +165,54 @@ class Membership_members {
         $trans = new Membership_transactions();
         $trans->posts_per_page = 1000;
 
-        $list = $trans->get_transactions( array("user_id" => $user_id) );
+        $list = $trans->get_transactions( array("user_id" => $user_id), $filter['search'] );
 
         return $list;
 
         echo "<pre>";
         print_r($list);
         echo "</pre>";
+
+    }
+
+    public function get_all_stats() {
+
+        $trans = new Membership_transactions();
+        $trans->posts_per_page = 10000;
+
+        $list = $trans->get_transactions();
+
+        // Total paid
+        $total_paid = 0;
+        foreach( $list['results'] as $item ) {
+            if( $item['status'] != 'success' ) { continue; }
+            $total_paid += $item['amount'];
+        }
+
+        $data['total_paid'] = $total_paid;
+
+        /*
+        echo "<pre>";
+        print_r($list);
+        echo "</pre>";
+        */
+
+        return $data;
+
+    }
+
+    public function get_member_debt( $user_id ) {
+
+        $mmb = new Membership_members();
+        $transactions = $mmb->get_user_transactions( $user_id );
+
+        /*
+        echo "<pre>";
+        print_r($transactions);
+        echo "</pre>";
+        */
+
+        return 15;
 
     }
 

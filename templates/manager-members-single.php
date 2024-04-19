@@ -6,50 +6,99 @@
     </div>
     
     <div class="col-md-10">
+
+
+        <div class="mb-3">
+            <div class="row">
+                <div class="col text-left">
+                    <a href="/manager/members/">
+                        Back
+                    </a>
+                </div>
+                <div class="col text-left">
+                    <?php /* ?>
+                    <p class="card-text">
+                        Estátus 
+                    </p>
+                    <h5 class="card-title">
+                    <?php if( $userdata['meta']['subscription_status'] == 'active' ) { ?>
+                        <span class="badge bg-success">Active</span> 
+                    <?php } else { ?>
+                        <span class="badge bg-fail">Expired</span> 
+                    <?php } ?>
+                    </h5>
+                    <?php */ ?>
+                </div>
+            </div>
+        </div>
         
         <h4>
-            Member #<?php echo $_GET['id']; ?> 
+            Membre #<?php echo $_GET['id']; ?> 
             <?php if( $userdata['meta']['subscription_status'] == 'active' ) { ?>
                 <span class="badge bg-success">Active</span> 
             <?php } else { ?>
-                <span class="badge bg-fail">Expired</span> 
+                <span class="badge bg-warning">Expired</span> 
             <?php } ?>
         </h4>
 
-        <br/>
-        <table class="cart" id="user-payments">
-          <thead>
-              <tr>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Appelido</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Nivel de Membrecía</th>
-                  <th scope="col">Inscripción Comienza</th>
-                  <th>número de carnet</th>
-              </tr>
-          </thead>
-          <tbody>
-            <td><?php echo $userdata['meta']['first_name']; ?></td>
-            <td><?php echo $userdata['meta']['last_name']; ?></td>
-            <td><?php echo $userdata['email']; ?></td>
-            <td><?php echo $userdata['meta']['sub_type']; ?></td>
-            <td><?php echo date( 'd/m/Y', strtotime($registered) ) ?></td>
-            <td><?php echo $userdata['meta']['policy_number']; ?></td>
-        </tbody>  
-        </table>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col text-center">
+                        <h5 class="card-title">
+                            <?php echo $userdata['meta']['first_name']; ?> <?php echo $userdata['meta']['last_name']; ?>
+                        </h5>
+                        <p class="card-text">
+                            Email: 
+                            <a href="mailto:<?php echo $userdata['email']; ?>">
+                                <?php echo $userdata['email']; ?>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col text-center">
+                        <p class="card-text">Membrecía</p>
+                        <p><b><?php echo $userdata['meta']['sub_type']; ?></b></p>
+                    </div>
+                    <div class="col text-center">
+                        <p class="card-text">Fecha Inscripción</p>
+                        <p><b><?php echo date( 'd/m/Y', strtotime($registered) ) ?></b></p>
+                    </div>
+                    <div class="col text-center">
+                        <p class="card-text">Número de Carnet</p>
+                        <p><b><?php echo $userdata['meta']['policy_number']; ?></b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <br/>
         <h4>Transactions</h4>
 
+        <div class="row">
+            <div class="col-md-6 left-column">
+                <form class="form-inline justify-content-end">
+                    <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" />
+                    <div class="row">
+                        <div class="col" align="right">
+                            <input type="text" class="form-control mb-2 mr-sm-2" name="search" value="<?php echo $_GET['search']; ?>" placeholder="Search">
+                        </div>
+
+                        <div class="col" align="left">
+                            <button type="submit" class="btn btn-primary mb-2 mr-2">Find</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <table class="cart" id="user-payments">
             <thead>
                 <tr>
-                    <th scope="col">Transaction ID</th>
-                    <th scope="col">Payment method</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Plan ID</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">Número Transacción</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Estátus</th>
+                    <th scope="col">Deuda Acumulada</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,12 +110,10 @@
 
                 <tr>
                     <td><?php echo $user['transaction_id']; ?></td>
-                    <!--<td><?php echo $user['meta']['first_name']; ?> <?php echo $user['meta']['last_name']; ?></td>-->
-                    <td><?php echo $user['payment_method']; ?></td>
-                    <td><?php echo $user['amount']; ?>$</td>
-                    <td><?php echo $user['plan_id']; ?></td>
-                    <td><?php echo $user['status']; ?></td>
                     <td><?php echo date( 'd/m/Y', strtotime($user['created_at']) ) ?></td>
+                    <td><?php echo $user['amount']; ?>$</td>
+                    <td><?php echo $user['status']; ?></td>
+                    <td><?php echo $accumulated; ?></td>                    
                 </tr>
                 <?php } ?>
             </tbody>

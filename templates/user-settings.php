@@ -1,6 +1,6 @@
 <?php
 // Login form
-echo wp_login_form($args);
+//echo wp_login_form($args);
 ?>
 
 
@@ -15,24 +15,7 @@ echo wp_login_form($args);
         
       <h4>My settings</h4>
 
-      <form>
-          <!-- Name field -->
-          <div class="form-group">
-              <label for="nameInput">Name</label>
-              <input type of="text" class="form-control" id="nameInput" placeholder="Enter your name">
-          </div>
-          
-          <!-- Password field -->
-          <div class="form-group">
-              <label for="passwordInput">Password</label>
-              <input type="password" class="form-control" id="passwordInput" placeholder="Password">
-          </div>
-
-          <br/>
-          
-          <!-- Submit button -->
-          <button type="submit" class="btn btn-primary">Save</button>
-      </form>
+      <?php echo do_shortcode('[cxc_change_pwd_form]'); ?>
 
     </div>
 

@@ -27,6 +27,8 @@ class Membership_init {
         require_once( MEMBERSHIP_PLUGIN_DIR_ABS.'/shortcodes/user.php' );
         require_once( MEMBERSHIP_PLUGIN_DIR_ABS.'/shortcodes/manager.php' );
         require_once( MEMBERSHIP_PLUGIN_DIR_ABS.'/shortcodes/nmi_forms.php' );
+        require_once( MEMBERSHIP_PLUGIN_DIR_ABS.'/shortcodes/login.php' );
+        require_once( MEMBERSHIP_PLUGIN_DIR_ABS.'/shortcodes/reset-password.php' );
 
     }
 

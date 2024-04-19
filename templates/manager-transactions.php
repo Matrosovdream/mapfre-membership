@@ -58,7 +58,7 @@
                       <button type="submit" class="btn btn-primary mb-2 mr-2">Find</button>
                     </div>
 
-                    <div class="col">
+                    <div class="col" align="right">
                       <a 
                         href="<?php echo add_query_arg( array('action' => "export-transactions") ); ?>"
                         class="btn btn-secondary mb-2"
@@ -105,16 +105,27 @@
           </tbody>
       </table>
 
-      <?php
-      echo paginate_links( array(
-        'base' => add_query_arg( 'pg', '%#%' ),
-        'format' => '',
-        'prev_text' => __('&laquo;'),
-        'next_text' => __('&raquo;'),
-        'total' => ceil($result['total_count'] / $result['posts_per_page']),
-        'current' => $result['current_page']
-      ));
-      ?>
+      <div class="mb-3">
+          <div class="row">
+              <div class="col text-left">
+                  <p></p>
+              </div>
+              <div class="col text-end">
+                <?php
+                echo paginate_links( array(
+                  'base' => add_query_arg( 'pg', '%#%' ),
+                  'format' => '',
+                  'prev_text' => __('&laquo;'),
+                  'next_text' => __('&raquo;'),
+                  'total' => ceil($result['total_count'] / $result['posts_per_page']),
+                  'current' => $result['current_page']
+                ));
+                ?>
+              </div>
+          </div>
+      </div>
+
+      
 
       <!--
       <nav aria-label="Page navigation example ">

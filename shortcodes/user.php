@@ -45,6 +45,15 @@ function user_subscription_func() {
 }
 
 function user_payments_func() {
+
+    $trans = new Membership_transactions();
+
+    // Filter data
+    $filter['user_id'] = get_current_user_id();
+    $result = $trans->get_transactions( $filter, $q );
+
+    // Displayed items
+    $list = $result['results'];
     
     ob_start();
     ?>

@@ -15,6 +15,13 @@ class Reports_CSV {
 
         $content = $this->content;
 
+        /*
+        echo "<pre>";
+        print_r( $content );
+        echo "</pre>";
+        die();
+        */
+
         $output = fopen("php://output",'w') or die("Can't open php://output");
         header("Content-Type:application/csv"); 
         header("Content-Disposition:attachment; filename={$filename}"); 
@@ -30,11 +37,6 @@ class Reports_CSV {
         fclose($output) or die("Can't close php://output");
 
         exit();
-
-        echo "<pre>";
-        print_r( $content );
-        echo "</pre>";
-        die();
 
     } 
 

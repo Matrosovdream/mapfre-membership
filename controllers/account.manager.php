@@ -31,6 +31,7 @@ class Membership_controllers_manager {
             $mmb->get_members_list( $filter, $page=$_GET['pg'], $all=true );
             $members = $mmb->prepare_for_export();
 
+
             $report = new Membership_reports( $content=$members );
             $report->get_file();
 
@@ -40,9 +41,16 @@ class Membership_controllers_manager {
         if( $_GET['action'] == 'export-transactions' ) {
 
             $trans = new Membership_transactions();
-            $list = $trans->get_transactions();
+            
+            // Filter data
+            if( isset($_GET['status']) ) {
+                $filter['status'] = $_GET['status'];
+            }
+            if( isset($_GET['q']) ) { $q = $_GET['q']; }
 
-            $report = new Membership_reports( $content=$list );
+            $result = $trans->get_transactions( $filter, $q );
+
+            $report = new Membership_reports( $content=$result );
             $report->get_file();
 
         }

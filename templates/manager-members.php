@@ -83,6 +83,7 @@
                   <th scope="col">Status</th>
                   <th scope="col">Number</th>
                   <th>Paid sum</th>
+                  <th>Deuda Acumulada</th>
                   <th scope="col"></th>
               </tr>
           </thead>
@@ -104,6 +105,7 @@
                     <td>  
                       <?php echo $user['transactions_sum']; ?>$
                     </td>
+                    <td><?php echo $user['debt']; ?>$</td>
                     <td>
                       <a href="?id=<?php echo $user['ID']; ?>" class="button">View</a>
                     </td>
@@ -112,30 +114,25 @@
           </tbody>
       </table>
 
-      <?php
-      echo paginate_links( array(
-        'base' => add_query_arg( 'pg', '%#%' ),
-        'format' => '',
-        'prev_text' => __('&laquo;'),
-        'next_text' => __('&raquo;'),
-        'total' => ceil($pagination['total'] / $pagination['items_per_page']),
-        'current' => $pagination['current_page']
-      ));
-      ?>
-
-      <?php /*if( count($pagination) > 1 ) { ?>
-
-        <nav aria-label="Page navigation example ">
-          <ul class="pagination">
-            <?php foreach( $pagination as $number=>$page ) { ?>
-              <li class="page-item <?php if( $page['active'] ) { ?>active<?php } ?>">
-                <a class="page-link" href="<?php echo $page['url']; ?>"><?php echo $number; ?></a>
-              </li>
-            <?php } ?>
-          </ul>
-        </nav>
-
-      <?php }*/ ?>
+      <div class="mb-3">
+          <div class="row">
+              <div class="col text-left">
+                  <p>Total paid: <?php echo $stats['total_paid']; ?>$</p>
+              </div>
+              <div class="col text-end">
+                <?php
+                  echo paginate_links( array(
+                    'base' => add_query_arg( 'pg', '%#%' ),
+                    'format' => '',
+                    'prev_text' => __('&laquo;'),
+                    'next_text' => __('&raquo;'),
+                    'total' => ceil($pagination['total'] / $pagination['items_per_page']),
+                    'current' => $pagination['current_page']
+                  ));
+                ?>
+              </div>
+          </div>
+      </div>
 
     </div>
 

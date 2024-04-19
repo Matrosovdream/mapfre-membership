@@ -19,24 +19,36 @@
                 </tr>
             </thead>
             <tbody>
+              <?php foreach( $list as $user ) { ?>
                 <tr>
-                    <th scope="row">Diaria - $0.50</th>
-                    <td>$0.50</td>
-                    <td>Completed</td>
-                    <td>25/03/2024</td>
+                    <th scope="row"><?php echo $user['plan_id']; ?></th>
+                    <td><?php echo $user['amount']; ?>$</td>
+                    <td><?php echo $user['status']; ?></td>
+                    <td><?php echo date( 'd/m/Y', strtotime($user['created_at']) ) ?></td>
                 </tr>
+              <?php } ?>
             </tbody>
         </table>
 
-        <nav aria-label="Page navigation example ">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav>
+        <div class="mb-3">
+          <div class="row">
+              <div class="col text-left">
+                  <p></p>
+              </div>
+              <div class="col text-end">
+              <?php
+              echo paginate_links( array(
+                'base' => add_query_arg( 'pg', '%#%' ),
+                'format' => '',
+                'prev_text' => __('&laquo;'),
+                'next_text' => __('&raquo;'),
+                'total' => ceil($result['total_count'] / $result['posts_per_page']),
+                'current' => $result['current_page']
+              ));
+              ?>
+              </div>
+          </div>
+      </div>
 
     </div>
 
